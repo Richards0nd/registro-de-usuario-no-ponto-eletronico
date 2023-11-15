@@ -1,7 +1,7 @@
 @props([
-    'title' => __('Confirm Password'),
-    'content' => __('For your security, please confirm your password to continue.'),
-    'button' => __('Confirm'),
+    'title' => __('Confirme a senha'),
+    'content' => __('Para sua segurança, confirme sua senha para continuar.'),
+    'button' => __('Confirmar'),
 ])
 
 @php
