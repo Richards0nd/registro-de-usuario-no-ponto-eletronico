@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,17 @@ Route::get('/', function () {
 	return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-	return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/{nome}/registrar', [EmployeeController::class, 'register']);
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+	Route::get('/dashboard', function () {
+		return view('dashboard');
+	})->name('dashboard');
+	Route::get('/registros', [EmployeeController::class, 'index'])->name('employees');
+	Route::get('/{nome}/validar', [EmployeeController::class, 'show'])->name('employee.show');
+	Route::post('/registro/edit/{id}', [EmployeeController::class, 'update'])->name('employee.update');
+});
 
 Route::middleware('auth')->group(function () {
 	Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
