@@ -2,8 +2,7 @@ module.exports = {
 	env: {
 		browser: true,
 		es2021: true,
-		node: true,
-		php: true
+		node: true
 	},
 	extends: ['eslint:recommended'],
 	parserOptions: {
@@ -24,5 +23,5 @@ module.exports = {
 		'arrow-body-style': 'off',
 		'prefer-arrow-callback': 'off'
 	},
-	plugins: ['prettier', '@prettier/plugin-php']
+	plugins: ['prettier']
 }
