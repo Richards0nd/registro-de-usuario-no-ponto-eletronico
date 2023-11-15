@@ -1,0 +1,6 @@
+.github/
+.vscode/
+public/
+storage/
+vendor/
+node_modules/
