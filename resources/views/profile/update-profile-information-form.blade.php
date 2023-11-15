@@ -1,10 +1,10 @@
 <x-form-section submit="updateProfileInformation">
     <x-slot name="title">
-        {{ __('Profile Information') }}
+        {{ __('Informações do Perfil') }}
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Update your account\'s profile information and email address.') }}
+        {{ __('Atualize as informações de perfil e endereço de e-mail da sua conta.') }}
     </x-slot>
 
     <x-slot name="form">
@@ -53,7 +53,7 @@
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="name" value="{{ __('Name') }}" />
+            <x-label for="name" value="{{ __('Nome') }}" />
             <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name"
                 autocomplete="name" />
             <x-input-error for="name" class="mt-2" />
@@ -89,11 +89,11 @@
 
     <x-slot name="actions">
         <x-action-message class="mr-3" on="saved">
-            {{ __('Saved.') }}
+            {{ __('Salvo!') }}
         </x-action-message>
 
         <x-button wire:loading.attr="disabled" wire:target="photo">
-            {{ __('Save') }}
+            {{ __('Salvar') }}
         </x-button>
     </x-slot>
 </x-form-section>
