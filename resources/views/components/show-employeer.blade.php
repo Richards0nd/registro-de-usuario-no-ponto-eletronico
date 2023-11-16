@@ -87,7 +87,7 @@
                         Link de registro
                     </dt>
                     <dd>
-                        <button onclick="copyTextToClipboard('Texto para copiar')"
+                        <button onclick="copyTextToClipboard('{{ $link }}')"
                             class="bg-blue-400 hover:bg-blue-500 text-white font-bold py-0.1 text-xs mt-1 px-4 rounded">
                             Copiar Link
                         </button>

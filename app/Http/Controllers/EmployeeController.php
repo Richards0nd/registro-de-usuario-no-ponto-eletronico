@@ -29,7 +29,8 @@ class EmployeeController extends Controller
 	public function show(string $name)
 	{
 		$employee = Employee::where('name', $name)->first();
-		return view('employeer', compact('employee'));
+		$link = url('/' . $employee->name . '/registrar');
+		return view('employeer', compact('employee', 'link'));
 	}
 
 	public function edit($id)
