@@ -21,7 +21,6 @@ Route::get('/', function () {
 
 Route::get('/{nome}/registrar', [EmployeeController::class, 'register']);
 
-
 Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/dashboard', function () {
 		return view('dashboard');
@@ -29,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/registros', [EmployeeController::class, 'index'])->name('employees');
 	Route::get('/{nome}/validar', [EmployeeController::class, 'show'])->name('employee.show');
 	Route::post('/registro/edit/{id}', [EmployeeController::class, 'update'])->name('employee.update');
+	Route::post('/registro/request/new', [EmployeeController::class, 'storeTempEmployeer'])->name('employee.request.new');
 });
 
 Route::middleware('auth')->group(function () {
