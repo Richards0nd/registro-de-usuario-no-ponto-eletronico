@@ -39,15 +39,15 @@
                                     <label for="name">Nome completo</label>
                                     <input type="text" name="name" id="name"
                                         class="h-10 border mt-1 px-4 w-full bg-gray-50" value="{{ $employee->name }}"
-                                        required disabled />
+                                        maxlength="100" minlength="2" required disabled />
                                     <div class="bg-zinc-700 self-stretch shrink-0 h-px max-md:max-w-full"></div>
                                 </div>
 
                                 <div class="md:col-span-5">
                                     <label for="email">Email</label>
                                     <input type="email" name="email" id="email"
-                                        class="h-10 border mt-1 px-4 w-full bg-gray-50" value="" required
-                                        placeholder="email@domain.com" />
+                                        class="h-10 border mt-1 px-4 w-full bg-gray-50" value="" maxlength="100"
+                                        minlength="4" required placeholder="email@domain.com" />
                                     <div class="bg-zinc-700 self-stretch shrink-0 h-px max-md:max-w-full"></div>
                                 </div>
 
@@ -55,7 +55,8 @@
                                     <label for="cpf">CPF</label>
                                     <input type="text" name="cpf" id="cpf"
                                         class="h-10 border mt-1 px-4 w-full bg-gray-50" value="{{ $employee->cpf }}"
-                                        placeholder="Seu CPF (Sem pontos ou traços)" required disabled />
+                                        maxlength="11" minlength="11" placeholder="Seu CPF (Sem pontos ou traços)"
+                                        required disabled />
                                     <div class="bg-zinc-700 self-stretch shrink-0 h-px max-md:max-w-full"></div>
                                 </div>
 
@@ -63,7 +64,8 @@
                                     <label for="phone">Telefone</label>
                                     <input type="tel" name="phone" id="phone"
                                         class="h-10 border mt-1 px-4 w-full bg-gray-50" value=""
-                                        placeholder="Seu telefone sem espaços ou caracteres especiais" />
+                                        placeholder="Seu telefone sem espaços ou caracteres especiais" maxlength="15"
+                                        minlength="12" />
                                     <div class="bg-zinc-700 self-stretch shrink-0 h-px max-md:max-w-full"></div>
                                 </div>
 
