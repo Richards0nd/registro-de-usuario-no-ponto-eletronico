@@ -20,14 +20,18 @@ Route::get('/', function () {
 });
 
 Route::get('/{nome}/registrar', [EmployeeController::class, 'register']);
+Route::post('/registro/update/{id}', [EmployeeController::class, 'update'])->name('employee.update');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/dashboard', function () {
 		return view('dashboard');
 	})->name('dashboard');
+
 	Route::get('/registros', [EmployeeController::class, 'index'])->name('employees');
+
 	Route::get('/{nome}/validar', [EmployeeController::class, 'show'])->name('employee.show');
-	Route::post('/registro/edit/{id}', [EmployeeController::class, 'update'])->name('employee.update');
+
+	Route::post('/registro/validar/{id}', [EmployeeController::class, 'validate'])->name('employee.validate');
 	Route::post('/registro/request/new', [EmployeeController::class, 'storeTempEmployeer'])->name('employee.request.new');
 });
 

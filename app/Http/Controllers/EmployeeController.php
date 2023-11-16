@@ -4,25 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
 class EmployeeController extends Controller
 {
-
-	private $validations = [
-		'nome' => 'required|max:100',
-		'email' => 'required|email|max:100|unique:usuarios',
-		'cpf' => 'required|min:11|max:11',
-		'celular' => 'required|max:15',
-		'conhecimentos' => 'required|array|min:1|max:3',
-	];
-
 	public function index()
 	{
 		$employees = Employee::all();
 		return view('registros', compact('employees'));
+	}
+
+	public function register(string $name)
+	{
+		$employee = Employee::where('name', $name)->first();
+
+		if ($employee && ($employee->email === null || $employee->phone === null || $employee->knowledges === null)) {
+			return view('employee-register', compact('employee'));
+		}
+
+		return view('employee-already-register');
 	}
 
 	public function show(string $name)
@@ -42,7 +43,7 @@ class EmployeeController extends Controller
 		try {
 			$validatedData = $request->validate([
 				'name' => 'required|min:2|max:100',
-				'cpf' => 'required|min:11|max:11',
+				'cpf' => 'required|min:11|max:11'
 			]);
 
 			if (Employee::where('cpf', $request->cpf)->exists()) {
@@ -65,11 +66,19 @@ class EmployeeController extends Controller
 
 	public function update(Request $request, $id)
 	{
-		$validatedData = Validator::make($request->all(), $this->validations)->validate();
+		try {
+			$validatedData = $request->validate([
+				'email' => 'required|min:4|max:100|unique:employees,email',
+				'phone' => 'required|min:0|max:15',
+				'knowledges' => 'required|array|min:2|max:3'
+			]);
 
-		$usuario = Employee::findOrFail($id);
-		$usuario->update($validatedData);
+			$usuario = Employee::findOrFail($id);
+			$usuario->update($validatedData);
 
-		return redirect()->to('caminho_para_redirecionar_apos_atualizacao');
+			return response()->json(['success' => 'Registro atualizado com sucesso!']);
+		} catch (ValidationException $e) {
+			return response()->json(['errors' => $e->errors()], 422);
+		}
 	}
 }
