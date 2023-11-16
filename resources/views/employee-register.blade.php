@@ -133,8 +133,7 @@
                 if (data.errors) {
                     displayErrors(data.errors);
                 } else {
-                    alert('Registro realizado com sucesso!')
-                    window.close()
+                    window.location.href = '{{ route('employee.register.success') }}';
                 }
             })
             .catch(error => console.error('Error:', error));
