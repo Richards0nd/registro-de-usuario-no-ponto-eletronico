@@ -20,6 +20,11 @@ Route::get('/', function () {
 });
 
 Route::get('/{nome}/registrar', [EmployeeController::class, 'register']);
+
+Route::get('/registro/sucesso', function () {
+	return view('employee-register-sucess');
+})->name('employee.register.success');
+
 Route::post('/registro/update/{id}', [EmployeeController::class, 'update'])->name('employee.update');
 
 Route::middleware(['auth', 'verified'])->group(function () {
