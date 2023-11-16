@@ -84,7 +84,7 @@ class EmployeeController extends Controller
 		try {
 			$validatedData = $request->validate([
 				'email' => 'required|min:4|max:100|unique:employees,email',
-				'phone' => 'required|min:12|max:15',
+				'phone' => 'nullable|min:11|max:15',
 				'knowledges' => 'required|array|min:1|max:3'
 			]);
 
