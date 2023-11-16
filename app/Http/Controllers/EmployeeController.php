@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Rules\ValidCpf;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class EmployeeController extends Controller
 		try {
 			$validatedData = $request->validate([
 				'name' => 'required|min:2|max:100',
-				'cpf' => 'required|min:11|max:11'
+				'cpf' => ['required', 'min:11', 'max:11', 'unique:employees,cpf', new ValidCpf()]
 			]);
 
 			if (Employee::where('cpf', $request->cpf)->exists()) {
