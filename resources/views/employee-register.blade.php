@@ -70,7 +70,7 @@
                                 <div class="md:col-span-5">
                                     <label for="knowledges">Conhecimentos</label>
                                     <select name="knowledges[]" id="knowledges"
-                                        class="h-10 border mt-1 px-4 w-full bg-gray-50" multiple required>
+                                        class="h-30 border mt-1 px-4 w-full bg-gray-50" multiple required>
                                         <option value="Git">Git</option>
                                         <option value="React">React</option>
                                         <option value="PHP">PHP</option>

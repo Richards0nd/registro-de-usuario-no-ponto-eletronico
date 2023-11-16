@@ -6,6 +6,9 @@
         <p class="mt-1 max-w-2xl text-sm text-gray-500">
             Detalhes pessoais e de contato.
         </p>
+        <p id="actionMessage" class="text-lg text-green-400 mt-3" style="display: none;">
+            {{ $slot->isEmpty() ? 'Funcionáro validado com sucesso!' : $slot }}
+        </p>
     </div>
     <div class="border-t border-gray-200">
         <dl>
@@ -82,12 +85,26 @@
                     <dd class="text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                         {{ $employee->validated_in ? $employee->validated_in : 'Ainda não foi validado' }}
                     </dd>
+                    @if (!$employee->status)
+                        <dt class="text-sm font-medium text-gray-500">
+                            Validar Funcionário
+                        </dt>
+                        <dd class="text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <form action="{{ route('employee.validate', $employee->id) }}" method="POST"
+                                id="formValidateEmployee">
+                                @csrf
+                                <button type="submit" class="text-indigo-600 hover:text-indigo-900">
+                                    <i class="far fa-check-circle"></i>
+                                </button>
+                            </form>
+                        </dd>
+                    @endif
                 @else
                     <dt class="text-sm mt-2 font-medium text-gray-500">
                         Link de registro
                     </dt>
                     <dd>
-                        <button onclick="copyTextToClipboard('Texto para copiar')"
+                        <button onclick="copyTextToClipboard('{{ $link }}')"
                             class="bg-blue-400 hover:bg-blue-500 text-white font-bold py-0.1 text-xs mt-1 px-4 rounded">
                             Copiar Link
                         </button>
@@ -97,3 +114,30 @@
         </dl>
     </div>
 </div>
+
+<script>
+    document.getElementById('formValidateEmployee').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let form = this;
+        let formData = new FormData(form);
+
+        fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.errors) {
+                    displayErrors(data.errors);
+                } else {
+                    showActionMessage()
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
@@ -15,7 +17,7 @@ class EmployeeController extends Controller
 		return view('registros', compact('employees'));
 	}
 
-	public function register(string $name)
+	public function register(string $name): View
 	{
 		$employee = Employee::where('name', $name)->first();
 
@@ -26,16 +28,11 @@ class EmployeeController extends Controller
 		return view('employee-already-register');
 	}
 
-	public function show(string $name)
+	public function show(string $name): View
 	{
 		$employee = Employee::where('name', $name)->first();
-		return view('employeer', compact('employee'));
-	}
-
-	public function edit($id)
-	{
-		$usuario = Employee::findOrFail($id);
-		return view('usuarios.edit', compact('usuario'));
+		$link = url('/' . $employee->name . '/registrar');
+		return view('employee-show', compact('employee', 'link'));
 	}
 
 	public function storeTempEmployeer(Request $request): JsonResponse
@@ -56,15 +53,32 @@ class EmployeeController extends Controller
 			$employee->status = 0;
 			$employee->save();
 
-			$registrationLink = url('/' . $validatedData['name'] . '/registrar');
+			$link = url('/' . $validatedData['name'] . '/registrar');
 
-			return response()->json(['success' => 'Funcionário criado com sucesso.', 'link' => $registrationLink]);
+			return response()->json(['success' => 'Funcionário criado com sucesso.', 'link' => $link]);
 		} catch (ValidationException $e) {
 			return response()->json(['errors' => $e->errors()], 422);
 		}
 	}
 
-	public function update(Request $request, $id)
+	public function validateEmployee($id): JsonResponse
+	{
+		try {
+			$usuario = Employee::findOrFail($id);
+			$usuario->update([
+				'status' => 1,
+				'validated_in' => Carbon::now()
+			]);
+
+			return response()->json(['success' => 'Funcionário validado com sucesso!']);
+		} catch (ValidationException $e) {
+			return response()->json(['errors' => $e->errors()], 422);
+		} catch (\Exception $e) {
+			return response()->json(['error' => 'Ocorreu um erro ao validar o funcionário.'], 500);
+		}
+	}
+
+	public function update(Request $request, $id): JsonResponse
 	{
 		try {
 			$validatedData = $request->validate([
