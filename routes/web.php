@@ -31,7 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 	Route::get('/{nome}/validar', [EmployeeController::class, 'show'])->name('employee.show');
 
-	Route::post('/registro/validar/{id}', [EmployeeController::class, 'validate'])->name('employee.validate');
+	Route::post('/registro/validar/{id}', [EmployeeController::class, 'validateEmployee'])->name('employee.validate');
 	Route::post('/registro/request/new', [EmployeeController::class, 'storeTempEmployeer'])->name('employee.request.new');
 });
 

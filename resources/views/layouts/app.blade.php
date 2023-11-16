@@ -70,4 +70,12 @@
 
         document.body.removeChild(textarea);
     }
+
+    function showActionMessage() {
+        var message = document.getElementById('actionMessage');
+        message.style.display = 'block';
+        setTimeout(function() {
+            message.style.display = 'none';
+        }, 6000);
+    }
 </script>

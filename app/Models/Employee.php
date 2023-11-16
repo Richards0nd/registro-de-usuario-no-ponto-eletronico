@@ -13,5 +13,9 @@ class Employee extends Model
 		'email',
 		'phone',
 		'knowledges',
+		'status',
+		'validated_in'
 	];
+
+	protected $dates = ['validated_in'];
 }
