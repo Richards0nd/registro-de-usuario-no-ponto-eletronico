@@ -38,7 +38,9 @@
                     Telefone
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    {{ \App\Helpers\FormatHelper::formatPhone($employee->phone) }}
+                    @if ($employee->phone)
+                        {{ \App\Helpers\FormatHelper::formatPhone($employee->phone) }}
+                    @endif
                 </dd>
             </div>
             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -57,19 +59,40 @@
                 <dt class="text-sm font-medium text-gray-500">
                     Status
                 </dt>
-                <dd
-                    class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 {{ $employee->status ? 'bg-green-100 ' : 'bg-red-100 ' }} inline-block p-1 rounded-md">
-                    <p
-                        class="text-gray-900 whitespace-no-wrap {{ $employee->status ? ' text-green-800' : ' text-red-600' }}">
-                        {{ $employee->status ? 'Validado' : 'Não Validado' }}
-                    </p>
-                </dd>
-                <dt class="text-sm font-medium text-gray-500">
-                    Validado em
-                </dt>
                 <dd class="text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    {{ $employee->validated_in ? $employee->validated_in : 'Ainda não foi validado' }}
+                    <div
+                        class="{{ $employee->status ? 'bg-green-100' : ($employee->email ? 'bg-red-100' : 'bg-yellow-100') }} inline-flex items-center p-1 rounded-md">
+                        <p
+                            class="text-gray-900 whitespace-no-wrap {{ $employee->status ? 'text-green-800' : ($employee->email ? 'text-red-600' : 'text-yellow-600') }}">
+                            @if ($employee->status)
+                                VALIDADO
+                            @elseif ($employee->email)
+                                NÃO VALIDADO
+                            @else
+                                AGUARDANDO REGISTRO
+                            @endif
+                        </p>
+                    </div>
                 </dd>
+
+                @if ($employee->email)
+                    <dt class="text-sm font-medium text-gray-500">
+                        Validado em
+                    </dt>
+                    <dd class="text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ $employee->validated_in ? $employee->validated_in : 'Ainda não foi validado' }}
+                    </dd>
+                @else
+                    <dt class="text-sm mt-2 font-medium text-gray-500">
+                        Link de registro
+                    </dt>
+                    <dd>
+                        <button onclick="copyTextToClipboard('Texto para copiar')"
+                            class="bg-blue-400 hover:bg-blue-500 text-white font-bold py-0.1 text-xs mt-1 px-4 rounded">
+                            Copiar Link
+                        </button>
+                    </dd>
+                @endif
             </div>
         </dl>
     </div>
