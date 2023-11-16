@@ -64,8 +64,7 @@
                                     <label for="phone">Telefone</label>
                                     <input type="tel" name="phone" id="phone"
                                         class="h-10 border mt-1 px-4 w-full bg-gray-50" value=""
-                                        placeholder="Seu telefone sem espaços ou caracteres especiais" maxlength="15"
-                                        minlength="12" />
+                                        placeholder="Seu telefone sem espaços ou caracteres especiais" maxlength="15" />
                                     <div class="bg-zinc-700 self-stretch shrink-0 h-px max-md:max-w-full"></div>
                                 </div>
 
