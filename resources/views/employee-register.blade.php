@@ -154,6 +154,7 @@
         for (var i = 0; i < options.length; i++) {
             if (options[i].selected) count++;
         }
+
         if (count > 3) {
             alert('Você pode selecionar no máximo 3 conhecimentos.');
             for (var i = options.length - 1; i >= 0; i--) {
@@ -162,6 +163,8 @@
                     break;
                 }
             }
+        } else if (count < 1) {
+            alert('Você deve selecionar pelo menos 1 conhecimento.');
         }
     });
 </script>
